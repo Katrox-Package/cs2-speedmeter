@@ -12,6 +12,7 @@ namespace SpeedMeter
     {
         public string Prefix { get; set; } = "{lightred}[Katrox]";
         public bool DefaultHudEnabled { get; set; } = false;
+        public bool NotifyChatOnNewRecord { get; set; } = true;
 
         public string[] SpeedMeterCommands { get; set; } =
         {

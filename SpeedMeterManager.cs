@@ -27,7 +27,7 @@ namespace SpeedMeter
         private const float ZPos = 6.75f;
         private const float MinSpeedToRecord = 260;
 
-        private const float RecordCooldown = 0.2f;
+        private const float RecordCooldown = 0.3f;
         private static float LastRecordTime = 0.0f;
 
         public static void SpeedMeterToggle(CCSPlayerController controller)
@@ -153,7 +153,8 @@ namespace SpeedMeter
             {
                 SaveSpeedRecord(controller.SteamID, controller.PlayerName, speed);
 
-                if (!(Server.CurrentTime - LastRecordTime < RecordCooldown))
+                if (!(Server.CurrentTime - LastRecordTime < RecordCooldown)
+                    && _Config.NotifyChatOnNewRecord)
                 {
                     LastRecordTime = Server.CurrentTime;
                     Utils.PrintToAll("Record_Better", roundedSpeed, bestRounded, controller.PlayerName);
