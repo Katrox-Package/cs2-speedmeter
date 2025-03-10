@@ -4,13 +4,13 @@
 
     "NoRecords": "No speed records found yet.",
     "TopSpeed_Title": "Top 10 Speed Records:",
-    "TopSpeed_Entry": "{0}. {1}: {2}",
+    "TopSpeed_Entry": "{0}. {gold}{1}{white}: {green}{2}",
     
     "Edit_NeedEnable": "You need to enable the speed meter first to use edit mode!",
-    "Edit_Enabled": "Edit mode {green}enabled{default}! Use WASD to adjust position, MOUSE1/MOUSE2 to adjust size. Hold CTRL/SHIFT for more precise adjustments.",
+    "Edit_Enabled": "Edit mode {green}enabled{default}! Use WASD to adjust position, MOUSE1/MOUSE2 to adjust size.",
     "Edit_Disabled": "Edit mode {red}disabled{default}.",
         
     "Record_New": "New personal record: {green}{0}{default}! Previous record: {green}{1}{default}.",
     "Record_First": "First personal record: {green}{0}{default}!",
     "MySpeed": "Your highest speed record: {green}{0}{default}"
-} 
+}
