@@ -4,7 +4,7 @@
 
     "NoRecords": "Kaydedilmiş hız rekoru bulunmuyor.",
     "TopSpeed_Title": "Top 10 Hız Rekorları:",
-    "TopSpeed_Entry": "{0}. {1}: {2}",
+    "TopSpeed_Entry": "{0}. {gold}{1}{white}: {green}{2}",
     
     "Edit_NeedEnable": "Düzenleme modunu kullanmak için önce hız göstergesini aktifleştirin!",
     "Edit_Enabled": "Düzenleme modu {green}aktif{default}! WASD ile pozisyonu, MOUSE1/MOUSE2 (Sol Tık/Sağ Tık) ile boyutu değiştirin. CTRL/SHIFT tuşları ile daha hassas ayar yapabilirsiniz.",
