@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using cs2_speedmeter;
+﻿using cs2_speedmeter;
 using Microsoft.Extensions.Logging;
 
 namespace SpeedMeter
@@ -65,7 +59,7 @@ namespace SpeedMeter
 
                 TopSpeedRecords.Add(newRecord);
                 TopSpeedRecordsCache.Add(newRecord);
-                
+
                 if (!PlayerBestSpeeds.ContainsKey(steamId) || PlayerBestSpeeds[steamId].Speed < speed)
                 {
                     PlayerBestSpeeds[steamId] = newRecord;
@@ -74,6 +68,26 @@ namespace SpeedMeter
             catch (Exception ex)
             {
                 _Logger?.LogError($"[SpeedMeter] SaveSpeedRecord: {ex.Message}");
+            }
+        }
+
+        public static void ResetSpeedRecordDatas()
+        {
+            try
+            {
+                TopSpeedRecords.Clear();
+                TopSpeedRecordsCache.Clear();
+
+                PlayerBestSpeeds.Clear();
+
+                if (Db != null)
+                {
+                    Task.Run(async () => await Db.ResetSpeedRecordDatasAsync());
+                }
+            }
+            catch (Exception ex)
+            {
+                _Logger?.LogError($"[SpeedMeter] ResetSpeedRecordDatas: {ex.Message}");
             }
         }
 

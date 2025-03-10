@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MySqlConnector;
+﻿using MySqlConnector;
 
 namespace cs2_speedmeter
 {
@@ -75,7 +72,7 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
             command.Parameters.AddWithValue("@SteamId", steamId);
 
             using var reader = await command.ExecuteReaderAsync();
-            
+
             if (await reader.ReadAsync())
             {
                 return new SpeedSettingsDatabase
@@ -85,7 +82,7 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
                     Size = reader.GetByte("Size")
                 };
             }
-            
+
             return null;
         }
 
@@ -134,12 +131,23 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
 
             await command.ExecuteNonQueryAsync();
         }
+
+        public async Task ResetSpeedRecordDatasAsync()
+        {
+            using var connection = await OpenConnectionAsync();
+            using var command = connection.CreateCommand();
+
+            command.CommandText = "TRUNCATE TABLE speedmeter_records;";
+
+            await command.ExecuteNonQueryAsync();
+        }
+
         public async Task<List<SpeedRecord>> GetTopSpeedRecordsAsync(int limit = 10)
         {
             using var connection = await OpenConnectionAsync();
             using var command = connection.CreateCommand();
 
-            command.CommandText = limit == -1 
+            command.CommandText = limit == -1
                 ? @"
                     SELECT SteamId, PlayerName, Speed
                     FROM speedmeter_records

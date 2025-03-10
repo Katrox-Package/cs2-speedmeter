@@ -28,6 +28,11 @@ namespace SpeedMeter
             "topspeed", "speedtop"
         };
 
+        public string[] ResetTopSpeedCommands { get; set; } =
+        {
+            "resettopspeed", "resetspeedtop"
+        };
+
         public string DatabaseHost { get; set; } = "";
         public int DatabasePort { get; set; } = 3306;
         public string DatabaseUser { get; set; } = "";
@@ -65,6 +70,7 @@ namespace SpeedMeter
             foreach (var x in Config.SpeedMeterCommands) AddCommand(x, "", OnSpeedCommand);
             foreach (var x in Config.EditSpeedMeterCommands) AddCommand(x, "", OnSpeedEditCommand);
             foreach (var x in Config.TopSpeedCommands) AddCommand(x, "", OnTopSpeedCommand);
+            foreach (var x in Config.ResetTopSpeedCommands) AddCommand(x, "", OnResetTopSpeedCommand);
 
             if (Db != null)
             {
