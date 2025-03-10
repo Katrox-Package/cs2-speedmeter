@@ -16,7 +16,7 @@ namespace SpeedMeter
         public float Y { get; set; } = 4.367f;
         public Color Color { get; set; } = Color.Beige;
         public string Font { get; set; } = "Arial Bold";
-        public uint Fov { get; set; } = 90;
+        public uint Fov { get; set; } = 0;
     }
 
     public static class SpeedMeterManager
@@ -117,18 +117,19 @@ namespace SpeedMeter
                 GameHudApi.Native_GameHUD_UpdateParams(controller, SpeedMeterChannel, new Vector(x, y, z), settings.Color, size, settings.Font, 0.01f);
             }
 
-            if (settings.Fov != controller.DesiredFOV)
+            var fov = controller.DesiredFOV == 0 ? 90 : controller.DesiredFOV;
+            if (settings.Fov != fov)
             {
                 var (x, y, size) = GetXYWithFov(controller, settings.X, settings.Y, settings.Size);
                 var z = ZPos;
                 GameHudApi.Native_GameHUD_UpdateParams(controller, SpeedMeterChannel, new Vector(x, y, z), settings.Color, size, settings.Font, 0.01f);
             }
-            settings.Fov = controller.DesiredFOV;
+            settings.Fov = fov;
         }
 
         private static (float x, float y, byte size) GetXYWithFov(CCSPlayerController controller, float x, float y, float size)
         {
-            var fov = controller.DesiredFOV;
+            var fov = controller.DesiredFOV == 0 ? 90 : controller.DesiredFOV;
             float baseTan = (float)Math.Tan(45 * Math.PI / 180); // tan(45) = 1
             float currentTan = (float)Math.Tan((fov / 2) * Math.PI / 180);
             float newX = x * currentTan / baseTan;
