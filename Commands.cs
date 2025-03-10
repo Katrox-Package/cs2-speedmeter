@@ -63,7 +63,7 @@ namespace SpeedMeter
 
             ResetSpeedRecordDatas();
 
-            Utils.PrintToAll("TopSpeed_Reset");
+            Utils.PrintToAll("TopSpeed_Reset", admin);
         }
     }
 }
