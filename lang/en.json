@@ -11,6 +11,7 @@
     "Edit_Enabled": "Edit mode {green}enabled{default}! Use WASD to adjust position, MOUSE1/MOUSE2 to adjust size.",
     "Edit_Disabled": "Edit mode {red}disabled{default}.",
 
+    "Record_Better": "New server record by {green}{2}{white}: {yellow}{0}{default}! Previous record: {yellow}{1}{default}.",
     "Record_New": "New personal record: {green}{0}{default}! Previous record: {green}{1}{default}.",
     "Record_First": "First personal record: {green}{0}{default}!",
     "MySpeed": "Your highest speed record: {green}{0}{default}"

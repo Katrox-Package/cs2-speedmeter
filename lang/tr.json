@@ -11,6 +11,7 @@
     "Edit_Enabled": "Düzenleme modu {green}aktif{default}! WASD ile pozisyonu, MOUSE1/MOUSE2 (Sol Tık/Sağ Tık) ile boyutu değiştirin. CTRL/SHIFT tuşları ile daha hassas ayar yapabilirsiniz.",
     "Edit_Disabled": "Düzenleme modu {red}devre dışı{default}.",
 
+    "Record_Better": "{green}{2}{white} yeni sunucu rekorunu kırdı: {yellow}{0}{default}! Önceki sunucu rekoru: {yellow}{1}{default}.",
     "Record_New": "Yeni kişisel rekorunuz: {green}{0}{default}! Önceki rekorunuz: {green}{1}{default}.",
     "Record_First": "İlk kişisel rekorunuz: {green}{0}{default}!",
     "MySpeed": "En yüksek hız rekorunuz: {green}{0}{default}"

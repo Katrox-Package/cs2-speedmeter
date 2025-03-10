@@ -3,6 +3,7 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Modules.Utils;
 using static SpeedMeter.SpeedMeter;
+using CounterStrikeSharp.API.Modules.Entities;
 
 namespace SpeedMeter
 {
@@ -26,12 +27,12 @@ namespace SpeedMeter
         private const float ZPos = 6.75f;
         private const float MinSpeedToRecord = 260;
 
+        private const float RecordCooldown = 0.2f;
+        private static float LastRecordTime = 0.0f;
+
         public static void SpeedMeterToggle(CCSPlayerController controller)
         {
             if (GameHudApi == null)
-                return;
-
-            if (controller.PlayerPawn.Value?.LifeState != (byte)LifeState_t.LIFE_ALIVE)
                 return;
 
             if (!SpeedMeterPlayers.TryGetValue(controller.SteamID, out var settings))
@@ -143,7 +144,7 @@ namespace SpeedMeter
             if (speed < MinSpeedToRecord)
                 return;
 
-            var bestRecord = GetPlayerBestSpeed(controller.SteamID);
+            var bestRecord = GetTopSpeedRecords(1).FirstOrDefault();
 
             var roundedSpeed = Math.Round(speed);
             var bestRounded = bestRecord != null ? Math.Round(bestRecord.Speed) : 0;
@@ -152,13 +153,10 @@ namespace SpeedMeter
             {
                 SaveSpeedRecord(controller.SteamID, controller.PlayerName, speed);
 
-                if (bestRecord != null)
+                if (!(Server.CurrentTime - LastRecordTime < RecordCooldown))
                 {
-                    controller.Print("Record_New", roundedSpeed, bestRounded);
-                }
-                else
-                {
-                    controller.Print("Record_First", roundedSpeed);
+                    LastRecordTime = Server.CurrentTime;
+                    Utils.PrintToAll("Record_Better", roundedSpeed, bestRounded, controller.PlayerName);
                 }
             }
         }
