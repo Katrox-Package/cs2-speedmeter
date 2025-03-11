@@ -22,7 +22,7 @@
 
 	<ItemGroup>
 		<Reference Include="CS2-GameHUDAPI">
-			<HintPath>CS2-GameHUDAPI.dll</HintPath>
+			<HintPath>../CS2-GameHUDAPI.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
