@@ -53,7 +53,7 @@ namespace SpeedMeter
                 }
 
                 var (x, y, size) = GetXYWithFov(controller, settings.X, settings.Y, settings.Size);
-                GameHudApi.Native_GameHUD_SetParams(controller, SpeedMeterChannel, new Vector(x, y, ZPos), settings.Color, size, settings.Font, 0.01f);
+                UpdateHud(controller, new Vector(x, y, ZPos), settings.Color, size, settings.Font, true);
                 GameHudApi.Native_GameHUD_ShowPermanent(controller, SpeedMeterChannel, "0");
             }
             else
@@ -115,7 +115,7 @@ namespace SpeedMeter
 
                 var (x, y, size) = GetXYWithFov(controller, settings.X, settings.Y, settings.Size);
                 var z = ZPos;
-                GameHudApi.Native_GameHUD_UpdateParams(controller, SpeedMeterChannel, new Vector(x, y, z), settings.Color, size, settings.Font, 0.01f);
+                UpdateHud(controller, new Vector(x, y, z), settings.Color, size, settings.Font);
             }
 
             var fov = controller.DesiredFOV == 0 ? 90 : controller.DesiredFOV;
@@ -123,7 +123,7 @@ namespace SpeedMeter
             {
                 var (x, y, size) = GetXYWithFov(controller, settings.X, settings.Y, settings.Size);
                 var z = ZPos;
-                GameHudApi.Native_GameHUD_UpdateParams(controller, SpeedMeterChannel, new Vector(x, y, z), settings.Color, size, settings.Font, 0.01f);
+                UpdateHud(controller, new Vector(x, y, z), settings.Color, size, settings.Font);
             }
             settings.Fov = fov;
         }
@@ -161,6 +161,22 @@ namespace SpeedMeter
                 }
             }
         }
+
+        private static void UpdateHud(CCSPlayerController player, Vector vec, Color color, int size, string font, bool set = false)
+        {
+            if (GameHudApi == null) return;
+            if (set)
+            {
+                GameHudApi.Native_GameHUD_SetParams
+                    (player, SpeedMeterChannel, vec, color, size, font, 0.01f, PointWorldTextJustifyHorizontal_t.POINT_WORLD_TEXT_JUSTIFY_HORIZONTAL_CENTER);
+            }
+            else
+            {
+                GameHudApi.Native_GameHUD_UpdateParams
+                    (player, SpeedMeterChannel, vec, color, size, font, 0.01f, PointWorldTextJustifyHorizontal_t.POINT_WORLD_TEXT_JUSTIFY_HORIZONTAL_CENTER);
+            }
+        }
+
 
     }
 }
