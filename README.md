@@ -1,15 +1,14 @@
-# Katrox-SpeedoMeter
+# cs2-speedmeter
 
 A Counter-Strike 2 plugin that displays your current speed on any part of the screen.
 
-![Katrox-SpeedoMeter](https://i.imgur.com/xPmkRYg.png)
+![cs2-speedmeter](https://i.imgur.com/xPmkRYg.png)
 
 ## Features
 
 - Display your movement speed in real-time
 - Customizable position on screen
-- Easy to install and configure
-- Minimal performance impact
+- Top speed tracking
 
 ## Installation
 
@@ -41,6 +40,7 @@ Configuration options can be found in the `config.json` file located in the plug
 - `!speedmeter` - Toggle the speedometer display
 - `!speedmeteredit` - Configure the position of the speedometer
 - `!topspeed` - Shows top 10 speed list on server
+- `!resettopspeed` - Resets top 10 speed list on server
 
 - You can change the commands in the config file
 
