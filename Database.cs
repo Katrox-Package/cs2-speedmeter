@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
     SteamId BIGINT UNSIGNED NOT NULL UNIQUE,
     X FLOAT NOT NULL,
     Y FLOAT NOT NULL,
-    Size TINYINT NOT NULL
+    Size TINYINT NOT NULL,
+    Color VARCHAR(32) NOT NULL
 );
             ", connection);
 
@@ -44,21 +45,22 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
 
         #region Settings
 
-        public async Task SaveSettingAsync(ulong steamId, float x, float y, byte size)
+        public async Task SaveSettingAsync(ulong steamId, float x, float y, byte size, string color)
         {
             using var connection = await OpenConnectionAsync();
             using var command = connection.CreateCommand();
 
             command.CommandText = @"
-                INSERT INTO speedmeter_settings (SteamId, X, Y, Size) 
-                VALUES (@SteamId, @X, @Y, @Size)
-                ON DUPLICATE KEY UPDATE X = @X, Y = @Y, Size = @Size;
+                INSERT INTO speedmeter_settings (SteamId, X, Y, Size, Color) 
+                VALUES (@SteamId, @X, @Y, @Size, @Color)
+                ON DUPLICATE KEY UPDATE X = @X, Y = @Y, Size = @Size, Color = @Color;
             ";
 
             command.Parameters.AddWithValue("@SteamId", steamId);
             command.Parameters.AddWithValue("@X", x);
             command.Parameters.AddWithValue("@Y", y);
             command.Parameters.AddWithValue("@Size", size);
+            command.Parameters.AddWithValue("@Color", color);
 
             await command.ExecuteNonQueryAsync();
         }
@@ -68,7 +70,7 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
             using var connection = await OpenConnectionAsync();
             using var command = connection.CreateCommand();
 
-            command.CommandText = "SELECT X, Y, Size FROM speedmeter_settings WHERE SteamId = @SteamId;";
+            command.CommandText = "SELECT X, Y, Size, Color FROM speedmeter_settings WHERE SteamId = @SteamId;";
             command.Parameters.AddWithValue("@SteamId", steamId);
 
             using var reader = await command.ExecuteReaderAsync();
@@ -79,7 +81,8 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
                 {
                     X = reader.GetFloat("X"),
                     Y = reader.GetFloat("Y"),
-                    Size = reader.GetByte("Size")
+                    Size = reader.GetByte("Size"),
+                    Color = reader.GetString("Color")
                 };
             }
 
@@ -223,5 +226,6 @@ CREATE TABLE IF NOT EXISTS speedmeter_settings (
         public float X { get; set; } = 0.57f;
         public float Y { get; set; } = 4.367f;
         public byte Size { get; set; } = 50;
+        public string Color { get; set; } = "White";
     }
 }

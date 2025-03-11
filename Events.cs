@@ -29,7 +29,7 @@ namespace SpeedMeter
                 {
                     if (settings.UsingSave)
                     {
-                        SaveSpeedMeterSettingsDb(steamid, settings.X, settings.Y, settings.Size);
+                        SaveSpeedMeterSettingsDb(steamid, settings.X, settings.Y, settings.Size, ColorMaps.FirstOrDefault(x => x.Value == settings.Color).Key);
                     }
 
                     SpeedMeterPlayers.Remove(steamid);

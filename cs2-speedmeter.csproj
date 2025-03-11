@@ -26,4 +26,13 @@
 		</Reference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="lang\en.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="lang\tr.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>

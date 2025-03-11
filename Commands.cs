@@ -1,6 +1,9 @@
+using System.Drawing;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Core.Translations;
 using CounterStrikeSharp.API.Modules.Admin;
 using CounterStrikeSharp.API.Modules.Commands;
+using CounterStrikeSharp.API.Modules.Menu;
 
 namespace SpeedMeter
 {
@@ -25,10 +28,32 @@ namespace SpeedMeter
                 return;
             }
 
-            settings.Editing = !settings.Editing;
+            var menu = new CenterHtmlMenu(Localizer.ForPlayer(player, "Menu_Edit"), this);
+            var colormenu = new CenterHtmlMenu(Localizer.ForPlayer(player, "Menu_Color"), this) { PostSelectAction = PostSelectAction.Nothing };
 
-            var text = settings.Editing ? "Edit_Enabled" : "Edit_Disabled";
-            player.Print(text);
+            menu.AddMenuOption(Localizer.ForPlayer(player, "Option_Position_Size"), (_, opt) =>
+            {
+                settings.Editing = !settings.Editing;
+
+                var text = settings.Editing ? "Edit_Enabled" : "Edit_Disabled";
+                player.Print(text);
+            });
+
+            menu.AddMenuOption(Localizer.ForPlayer(player, "Option_Color_Menu"), (_, opt) =>
+            {
+                foreach (var color in ColorMaps)
+                {
+                    colormenu.AddMenuOption(color.Key, (_, opt) =>
+                    {
+                        settings.Color = color.Value;
+                        player.Print("Changed_Color", color.Key);
+                        SpeedMeterManager.UpdateHud(player, settings.X, settings.Y, settings.Color, settings.Size, settings.Font);
+                    });
+                }
+                colormenu.Open(player);
+            });
+
+            menu.Open(player);
         }
 
         public void OnTopSpeedCommand(CCSPlayerController? player, CommandInfo command)

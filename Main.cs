@@ -1,4 +1,5 @@
-﻿using CounterStrikeSharp.API.Core;
+﻿using System.Drawing;
+using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Translations;
 using CounterStrikeSharp.API.Modules.Timers;
 using CS2_GameHUDAPI;
@@ -45,7 +46,7 @@ namespace SpeedMeter
     {
         public override string ModuleName => "cs2-speedmeter";
         public override string ModuleAuthor => "Roxy & Katarina";
-        public override string ModuleVersion => "0.0.4";
+        public override string ModuleVersion => "0.0.5";
 
         public override void Load(bool hotReload)
         {
@@ -156,6 +157,18 @@ namespace SpeedMeter
         public static List<SpeedRecord> TopSpeedRecords = new();
         public static List<SpeedRecord> TopSpeedRecordsCache = new();
 
+        public static Dictionary<string, Color> ColorMaps = new()
+        {
+            { "White" , Color.FromArgb(225, 255, 255, 255) },
+            { "Black", Color.FromArgb(255, 0, 0, 0) },
+            { "Red", Color.FromArgb(255, 255, 0, 0) },
+            { "Blue" , Color.FromArgb(255, 0, 0, 255) },
+            { "Cyan" , Color.FromArgb(255, 0, 255, 255) },
+            { "Green" , Color.FromArgb(255, 0, 255, 0) },
+            { "Yellow" , Color.FromArgb(255, 255, 255, 0) },
+            { "Magenta" , Color.FromArgb(255, 255, 0, 255) }
+        };
+
         public CounterStrikeSharp.API.Modules.Timers.Timer? _SaveCacheToDatabaseTimer;
 
         private void SaveCacheToDatabase()
@@ -173,7 +186,7 @@ namespace SpeedMeter
                         {
                             try
                             {
-                                await Db.SaveSettingAsync(player.Key, player.Value.X, player.Value.Y, player.Value.Size);
+                                await Db.SaveSettingAsync(player.Key, player.Value.X, player.Value.Y, player.Value.Size, ColorMaps.FirstOrDefault(x => x.Value == player.Value.Color).Key);
                             }
                             catch (Exception ex)
                             {

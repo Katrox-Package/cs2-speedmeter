@@ -24,14 +24,14 @@ namespace SpeedMeter
             }
         }
 
-        public static void SaveSpeedMeterSettingsDb(ulong steamId, float x, float y, byte size)
+        public static void SaveSpeedMeterSettingsDb(ulong steamId, float x, float y, byte size, string color)
         {
             if (Db == null)
                 return;
 
             try
             {
-                Task.Run(async () => await Db.SaveSettingAsync(steamId, x, y, size));
+                Task.Run(async () => await Db.SaveSettingAsync(steamId, x, y, size, color));
             }
             catch (Exception ex)
             {
