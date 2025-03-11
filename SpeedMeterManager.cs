@@ -14,7 +14,7 @@ namespace SpeedMeter
         public byte Size { get; set; } = 50;
         public float X { get; set; } = 0.57f;
         public float Y { get; set; } = 4.367f;
-        public Color Color { get; set; } = Color.Beige;
+        public Color Color { get; set; } = Color.White;
         public string Font { get; set; } = "Arial Bold";
         public uint Fov { get; set; } = 0;
     }
@@ -47,12 +47,13 @@ namespace SpeedMeter
                         settings.X = data.X;
                         settings.Y = data.Y;
                         settings.Size = data.Size;
+                        settings.Color = ColorMaps[data.Color];
                     }
                     settings.UsingSave = true;
                 }
 
                 var (x, y, size) = GetXYWithFov(controller, settings.X, settings.Y, settings.Size);
-                UpdateHud(controller, new Vector(x, y, ZPos), settings.Color, size, settings.Font, true);
+                UpdateHud(controller, x, y, settings.Color, size, settings.Font, true);
                 GameHudApi.Native_GameHUD_ShowPermanent(controller, SpeedMeterChannel, "0");
             }
             else
@@ -113,16 +114,14 @@ namespace SpeedMeter
                 if (buttons.HasFlag(PlayerButtons.Attack2)) settings.Size -= 1;
 
                 var (x, y, size) = GetXYWithFov(controller, settings.X, settings.Y, settings.Size);
-                var z = ZPos;
-                UpdateHud(controller, new Vector(x, y, z), settings.Color, size, settings.Font);
+                UpdateHud(controller, x, y, settings.Color, size, settings.Font);
             }
 
             var fov = controller.DesiredFOV == 0 ? 90 : controller.DesiredFOV;
             if (settings.Fov != fov)
             {
                 var (x, y, size) = GetXYWithFov(controller, settings.X, settings.Y, settings.Size);
-                var z = ZPos;
-                UpdateHud(controller, new Vector(x, y, z), settings.Color, size, settings.Font);
+                UpdateHud(controller, x, y, settings.Color, size, settings.Font);
             }
             settings.Fov = fov;
         }
@@ -161,18 +160,18 @@ namespace SpeedMeter
             }
         }
 
-        private static void UpdateHud(CCSPlayerController player, Vector vec, Color color, int size, string font, bool set = false)
+        public static void UpdateHud(CCSPlayerController player, float x, float y, Color color, int size, string font, bool set = false)
         {
             if (GameHudApi == null) return;
             if (set)
             {
                 GameHudApi.Native_GameHUD_SetParams
-                    (player, SpeedMeterChannel, vec, color, size, font, 0.01f, PointWorldTextJustifyHorizontal_t.POINT_WORLD_TEXT_JUSTIFY_HORIZONTAL_CENTER);
+                    (player, SpeedMeterChannel, new Vector(x, y, ZPos), color, size, font, 0.01f, PointWorldTextJustifyHorizontal_t.POINT_WORLD_TEXT_JUSTIFY_HORIZONTAL_CENTER);
             }
             else
             {
                 GameHudApi.Native_GameHUD_UpdateParams
-                    (player, SpeedMeterChannel, vec, color, size, font, 0.01f, PointWorldTextJustifyHorizontal_t.POINT_WORLD_TEXT_JUSTIFY_HORIZONTAL_CENTER);
+                    (player, SpeedMeterChannel, new Vector(x, y, ZPos), color, size, font, 0.01f, PointWorldTextJustifyHorizontal_t.POINT_WORLD_TEXT_JUSTIFY_HORIZONTAL_CENTER);
             }
         }
 
