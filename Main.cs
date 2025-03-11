@@ -45,7 +45,7 @@ namespace SpeedMeter
     {
         public override string ModuleName => "cs2-speedmeter";
         public override string ModuleAuthor => "Roxy & Katarina";
-        public override string ModuleVersion => "0.0.3";
+        public override string ModuleVersion => "0.0.4";
 
         public override void Load(bool hotReload)
         {
