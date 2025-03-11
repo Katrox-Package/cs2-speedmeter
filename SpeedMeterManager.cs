@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
-using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API;
+using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
 using static SpeedMeter.SpeedMeter;
-using CounterStrikeSharp.API.Modules.Entities;
 
 namespace SpeedMeter
 {

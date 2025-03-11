@@ -59,11 +59,6 @@ namespace SpeedMeter
 
                 TopSpeedRecords.Add(newRecord);
                 TopSpeedRecordsCache.Add(newRecord);
-
-                if (!PlayerBestSpeeds.ContainsKey(steamId) || PlayerBestSpeeds[steamId].Speed < speed)
-                {
-                    PlayerBestSpeeds[steamId] = newRecord;
-                }
             }
             catch (Exception ex)
             {
@@ -77,8 +72,6 @@ namespace SpeedMeter
             {
                 TopSpeedRecords.Clear();
                 TopSpeedRecordsCache.Clear();
-
-                PlayerBestSpeeds.Clear();
 
                 if (Db != null)
                 {
@@ -111,7 +104,7 @@ namespace SpeedMeter
         {
             try
             {
-                if (PlayerBestSpeeds.TryGetValue(steamId, out var record))
+                if (TopSpeedRecords.FirstOrDefault(x => x.SteamId == steamId) is { } record)
                 {
                     return record;
                 }

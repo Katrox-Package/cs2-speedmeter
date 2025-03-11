@@ -75,10 +75,7 @@ namespace SpeedMeter
 
             if (Db != null)
             {
-                _SaveCacheToDatabaseTimer = AddTimer(15f * 60f, () =>
-                {
-                    SaveCacheToDatabase();
-                }, TimerFlags.REPEAT);
+                _SaveCacheToDatabaseTimer = AddTimer(15f * 60f, SaveCacheToDatabase, TimerFlags.REPEAT);
             }
         }
 
@@ -140,18 +137,6 @@ namespace SpeedMeter
                     await Db.InitializeDatabaseAsync();
 
                     TopSpeedRecords = await Db.GetTopSpeedRecordsAsync(-1);
-                    if (TopSpeedRecords != null)
-                    {
-                        PlayerBestSpeeds = new Dictionary<ulong, SpeedRecord>();
-                        foreach (var record in TopSpeedRecords)
-                        {
-                            if (!PlayerBestSpeeds.ContainsKey(record.SteamId) ||
-                                PlayerBestSpeeds[record.SteamId].Speed < record.Speed)
-                            {
-                                PlayerBestSpeeds[record.SteamId] = record;
-                            }
-                        }
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -170,7 +155,6 @@ namespace SpeedMeter
         public static Dictionary<ulong, SpeedMeterSettings> SpeedMeterPlayers = new();
         public static List<SpeedRecord> TopSpeedRecords = new();
         public static List<SpeedRecord> TopSpeedRecordsCache = new();
-        public static Dictionary<ulong, SpeedRecord> PlayerBestSpeeds = new();
 
         public CounterStrikeSharp.API.Modules.Timers.Timer? _SaveCacheToDatabaseTimer;
 
