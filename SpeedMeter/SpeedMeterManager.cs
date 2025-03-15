@@ -143,20 +143,23 @@ namespace SpeedMeter
                 return;
 
             var bestRecord = GetTopSpeedRecords(1).FirstOrDefault();
+            var playerRecord = GetPlayerBestSpeed(controller.SteamID);
 
             var roundedSpeed = Math.Round(speed);
             var bestRounded = bestRecord != null ? Math.Round(bestRecord.Speed) : 0;
+            var playerRounded = playerRecord != null ? Math.Round(playerRecord.Speed) : 0;
 
-            if (bestRecord == null || roundedSpeed > bestRounded)
+            if (playerRecord == null || roundedSpeed > playerRounded)
             {
                 SaveSpeedRecord(controller.SteamID, controller.PlayerName, speed);
+            }
 
-                if (!(Server.CurrentTime - LastRecordTime < RecordCooldown)
-                    && _Config.NotifyChatOnNewRecord)
-                {
-                    LastRecordTime = Server.CurrentTime;
-                    Utils.PrintToAll("Record_Better", roundedSpeed, bestRounded, controller.PlayerName);
-                }
+            if ((bestRecord == null || roundedSpeed > bestRounded) &&
+                (Server.CurrentTime - LastRecordTime >= RecordCooldown) &&
+                _Config.NotifyChatOnNewRecord)
+            {
+                LastRecordTime = Server.CurrentTime;
+                Utils.PrintToAll("Record_Better", roundedSpeed, bestRounded, controller.PlayerName);
             }
         }
 
