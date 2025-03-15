@@ -1,6 +1,6 @@
 ﻿using MySqlConnector;
 
-namespace cs2_speedmeter
+namespace SpeedMeter
 {
     public class Database
     {

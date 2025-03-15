@@ -1,5 +1,4 @@
-﻿using cs2_speedmeter;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace SpeedMeter
 {

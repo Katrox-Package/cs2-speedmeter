@@ -3,7 +3,6 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Translations;
 using CounterStrikeSharp.API.Modules.Timers;
 using CS2_GameHUDAPI;
-using cs2_speedmeter;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
