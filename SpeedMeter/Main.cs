@@ -45,7 +45,7 @@ namespace SpeedMeter
     {
         public override string ModuleName => "cs2-speedmeter";
         public override string ModuleAuthor => "Roxy & Katarina";
-        public override string ModuleVersion => "0.0.6";
+        public override string ModuleVersion => "0.0.7";
 
         public override void Load(bool hotReload)
         {
@@ -158,7 +158,7 @@ namespace SpeedMeter
 
         public static Dictionary<string, Color> ColorMaps = new()
         {
-            { "White" , Color.FromArgb(225, 255, 255, 255) },
+            { "White" , Color.FromArgb(255, 255, 255, 255) },
             { "Black", Color.FromArgb(255, 0, 0, 0) },
             { "Red", Color.FromArgb(255, 255, 0, 0) },
             { "Blue" , Color.FromArgb(255, 0, 0, 255) },

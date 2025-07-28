@@ -14,7 +14,7 @@ namespace SpeedMeter
         public byte Size { get; set; } = 50;
         public float X { get; set; } = 0.57f;
         public float Y { get; set; } = 4.367f;
-        public Color Color { get; set; } = Color.White;
+        public Color Color { get; set; } = Color.FromArgb(255, 255, 255, 255);
         public string Font { get; set; } = "Arial Bold";
         public uint Fov { get; set; } = 0;
     }
